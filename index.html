@@ -99,7 +99,7 @@ const gamesData=[
  {id:16,day:'sun',sport:'football',time:'18:00',status:'Sunday',a:'Brighton University',b:'Westbridge Institute',ia:'BU',ib:'WI',markets:[['Brighton University','1.79'],['Westbridge Institute','2.04'],['Over 2.5 Goals','1.77']]}
 ];
 let picks=[];let currentSport='all';let currentDay='wed';
-const dayData=[['wed','Today','7'],['mon','Monday','5'],['tue','Tuesday','6'],['thu','Thursday','8'],['fri','Friday','9'],['sat','Saturday','10'],['sun','Sunday','11']];
+const dayData=[['wed','Wednesday','7'],['mon','Monday','5'],['tue','Tuesday','6'],['thu','Thursday','8'],['fri','Friday','9'],['sat','Saturday','10'],['sun','Sunday','11']];
 function renderDays(){document.getElementById('days').innerHTML=dayData.map(d=>'<button class="day '+(currentDay===d[0]?'active':'')+'" onclick="selectDay(\''+d[0]+'\')"><strong>'+d[1]+'</strong><span>Oct '+d[2]+'</span></button>').join('')}
 function selectDay(d){currentDay=d;renderDays();renderGames()}
 renderDays();
