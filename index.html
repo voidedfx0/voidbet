@@ -98,15 +98,15 @@ const gamesData=[
  {id:15,day:'sun',sport:'volleyball',time:'15:00',status:'Sunday',a:'Lakeview University',b:'Evergreen College',ia:'LV',ib:'EC',markets:[['Lakeview University','1.64'],['Evergreen College','2.25'],['Over 3.5 Sets','1.81']]},
  {id:16,day:'sun',sport:'football',time:'18:00',status:'Sunday',a:'Brighton University',b:'Westbridge Institute',ia:'BU',ib:'WI',markets:[['Brighton University','1.79'],['Westbridge Institute','2.04'],['Over 2.5 Goals','1.77']]}
 ];
-let picks=[];let currentSport='all';let currentDay='wed';
-const dayData=[['wed','Wednesday','7'],['mon','Monday','5'],['tue','Tuesday','6'],['thu','Thursday','8'],['fri','Friday','9'],['sat','Saturday','10'],['sun','Sunday','11']];
+let picks=[];let currentSport='all';let currentDay='today';
+const dayData=[['today','Today','7'],['mon','Monday','5'],['tue','Tuesday','6'],['wed','Wednesday','7'],['thu','Thursday','8'],['fri','Friday','9'],['sat','Saturday','10'],['sun','Sunday','11']];
 function renderDays(){document.getElementById('days').innerHTML=dayData.map(d=>'<button class="day '+(currentDay===d[0]?'active':'')+'" onclick="selectDay(\''+d[0]+'\')"><strong>'+d[1]+'</strong><span>Oct '+d[2]+'</span></button>').join('')}
 function selectDay(d){currentDay=d;renderDays();renderGames()}
 renderDays();
 function renderGames(){
  document.getElementById('dayTitle').textContent=(dayData.find(d=>d[0]===currentDay)?.[1]||'Today')+' Games';
  const root=document.getElementById('games');
- const list=gamesData.filter(g=>g.day===currentDay&&(currentSport==='all'||g.sport===currentSport));
+ const list=gamesData.filter(g=>(g.day===currentDay||(currentDay==='today'&&g.day==='wed'))&&(currentSport==='all'||g.sport===currentSport));
  root.innerHTML=list.map(g=>'<article class="game" onclick="openMatch('+g.id+')"><div class="game-top"><span>'+g.sport.toUpperCase()+'</span><span class="'+(g.id===1?'live':'')+'">'+(g.id===1?'● LIVE • ':'')+g.time+' · '+g.status+'</span></div><div class="teams"><div class="team"><div class="crest">'+g.ia+'</div><div class="team-name">'+g.a+'</div></div><div class="vs">VS</div><div class="team"><div class="crest">'+g.ib+'</div><div class="team-name">'+g.b+'</div></div></div><div class="markets">'+g.markets.map((m,i)=>'<button class="market '+(picks.some(p=>p.gameId===g.id&&p.market===m[0])?'selected':'')+'" onclick="event.stopPropagation();addPick('+g.id+',\''+m[0].replace(/'/g,"\\'")+'\','+m[1]+')"><b>'+m[0]+'</b><span>'+m[1]+'</span></button>').join('')+'</div></article>').join('');
 }
 function openMatch(id){
